@@ -1,0 +1,29 @@
+{
+  "name": "mofron-comp-arwddb",
+  "version": "0.0.1",
+  "description": "arrow dropdown base component for mofron",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simpart/mofron-comp-arwddb.git"
+  },
+  "dependencies": {
+    "mofron-comp-text" : "",
+    "mofron-comp-ddbase" : "",
+    "mofron-effect-slant" : "",
+    "mofron-layout-horizon" : "",
+    "mofron-event-style" : ""
+  },
+  "keywords": [
+    "front-end"
+  ],
+  "author": "simparts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simpart/mofron-comp-arwddb/issues"
+  },
+  "homepage": "https://github.com/simpart/mofron-comp-arwddb#readme"
+}
