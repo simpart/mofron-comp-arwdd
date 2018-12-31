@@ -4,12 +4,12 @@
  */
 const mf      = require('mofron');
 const Text    = require('mofron-comp-text');
-const DDBase  = require('mofron-comp-ddbase');
+const Ddown   = require('mofron-comp-dropdown');
 const Slant   = require('mofron-effect-slant');
 const Horiz   = require('mofron-layout-horizon');
 const evStyle = require('mofron-event-style');
 
-mf.comp.ArwDdb = class extends DDBase {
+mf.comp.Arwdd = class extends Ddown {
     /**
      * initialize component
      * 
@@ -18,7 +18,7 @@ mf.comp.ArwDdb = class extends DDBase {
     constructor (po) {
         try {
             super();
-            this.name('ArwDdb');
+            this.name('Arwdd');
             this.prmOpt(po);
         } catch (e) {
             console.error(e.stack);
@@ -35,7 +35,7 @@ mf.comp.ArwDdb = class extends DDBase {
         try {
             super.initDomConts();
             
-            this.base(
+            this.index(
                 new mf.Component({
                     layout : [new Horiz()],
                     child  : [this.bsText(), this.arrow()]
@@ -123,11 +123,11 @@ mf.comp.ArwDdb = class extends DDBase {
     }
     
     /**
-     * base text string setter/getter
+     * index text string setter/getter
      *
-     * @param p1 (string) base text
+     * @param p1 (string) index text
      * @param p1 (undefined) call as getter
-     * @return (string) base text string
+     * @return (string) index text string
      */
     text (prm) {
         try {
@@ -146,6 +146,9 @@ mf.comp.ArwDdb = class extends DDBase {
         }
     }
     
+    /**
+     * index text color setter/getter
+     */
     mainColor (prm) {
         try { return this.member('mainColor', 'string', prm); } catch (e) {
             console.error(e.stack);
@@ -153,6 +156,9 @@ mf.comp.ArwDdb = class extends DDBase {
         }
     }
     
+    /**
+     * index text hover color setter/getter
+     */
     accentColor (prm) {
         try { return this.member('accentColor', 'string', prm); } catch (e) {
             console.error(e.stack);
@@ -160,5 +166,5 @@ mf.comp.ArwDdb = class extends DDBase {
         }
     }
 }
-module.exports = mf.comp.ArwDdb;
+module.exports = mf.comp.Arwdd;
 /* end of file */
