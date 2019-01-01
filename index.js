@@ -38,7 +38,7 @@ mf.comp.Arwdd = class extends Ddown {
             this.index(
                 new mf.Component({
                     layout : [new Horiz()],
-                    child  : [this.bsText(), this.arrow()]
+                    child  : [this.text(), this.arrow()]
                 })
             );
             
@@ -47,14 +47,15 @@ mf.comp.Arwdd = class extends Ddown {
                 try {
                     let cl_buf = dd.mainColor();
                     /* configure base text */
-                    dd.bsText().execOption({
+                    dd.text().execOption({
                         mainColor : (true === flg) ? dd.accentColor() : dd.mainColor()
                     });
                     /* configure arrow */
                     dd.arrow().execOption({
                         mainColor : (true === flg) ? dd.accentColor() : dd.mainColor()
                     });
-                    dd.mainColor(cl_buf);
+                    
+                    dd.mainColor(cl_buf);  // avoid overwrite
                     dd.arrow().effect('Slant').forcedExec(flg);
                 } catch (e) {
                     console.error(e.stack);
@@ -63,34 +64,6 @@ mf.comp.Arwdd = class extends Ddown {
             };
             this.downEvent(dwn);
             
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
-     * base text component setter/getter
-     *
-     * @param p1 (Text) base text component
-     * @param p1 (undefined) call as getter
-     * @return  base text component
-     * @note private method
-     */
-    bsText (prm) {
-        try {
-            if (undefined !== prm) {
-                let clr = (btxt, sty, dd) => {
-                    try { dd.mainColor(sty.color); } catch (e) {
-                        console.error(e.stack);
-                        throw e;
-                    }
-                }
-                prm.execOption({
-                    event : [ new evStyle([clr,this], 'color') ]
-                });
-            }
-            return this.innerComp('bsText', prm, Text);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -131,15 +104,21 @@ mf.comp.Arwdd = class extends Ddown {
      */
     text (prm) {
         try {
-            if (undefined === prm) { 
-                return this.bsText().text();
-            } else if ('string' === typeof prm) {
-                this.bsText().execOption({ text : prm });
+            if ('string' === typeof prm) {
+                this.text().execOption({ text : prm });
+                return;
             } else if (true === mf.func.isComp(prm, 'Text')) {
-                this.bsText(prm);
-            } else {
-                throw new Error('invalid parameter');
+                let clr = (btxt, sty, dd) => {
+                    try { dd.mainColor(sty.color); } catch (e) {
+                        console.error(e.stack);
+                        throw e;
+                    }
+                }
+                prm.execOption({
+                    event : [ new evStyle([clr,this], 'color') ]
+                });
             }
+            return this.innerComp('text', prm, Text);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -150,7 +129,12 @@ mf.comp.Arwdd = class extends Ddown {
      * index text color setter/getter
      */
     mainColor (prm) {
-        try { return this.member('mainColor', 'string', prm); } catch (e) {
+        try {
+            if ( (undefined !== prm) && (null !== prm) ) {
+                prm = mf.func.getColor(prm).toString();
+            }
+            return this.member('mainColor', 'string', prm);
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -160,7 +144,12 @@ mf.comp.Arwdd = class extends Ddown {
      * index text hover color setter/getter
      */
     accentColor (prm) {
-        try { return this.member('accentColor', 'string', prm); } catch (e) {
+        try {
+            if ( (undefined !== prm) && (null !== prm) ) {
+                prm = mf.func.getColor(prm).toString();
+            }
+            return this.member('accentColor', 'string', prm);
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
